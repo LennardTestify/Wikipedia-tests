@@ -35,3 +35,16 @@ Cypress.on('uncaught:exception', (err, promise) => {
   // we still want to ensure there are no other unexpected
   // errors, so we let them fail the test
 });
+
+beforeEach(function() {
+  let testSuite = Cypress.env('SUITE');
+  if (!testSuite) {
+    return;
+  }
+  
+  const testName = Cypress.mocha.getRunner().test.fullTitle();
+  testSuite = "<"+testSuite+">"
+  if (!testName.includes(testSuite)) {
+    this.skip();
+  }
+})
