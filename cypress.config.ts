@@ -2,7 +2,7 @@ import { defineConfig } from 'cypress'
 
 export default defineConfig({
   env: {
-    startUrl: 'https://testify.team/de',
+    startUrl: 'https://testify.team',
     waitForStartpage: 5000,
   },
   viewportHeight: 1080,
