@@ -16,7 +16,7 @@ describe("Validate internal links", () => {
       if (url !== undefined && Cypress._.indexOf(data, url) === -1) {
         data.push(url);
 
-        if (url.indexOf('mailto') == -1 && url && (url.startsWith("/") || url.includes(hostname))) {
+        if (url.indexOf('mailto') == -1 && url && (url.startsWith("/") || url.includes(hostname)) && !(url.startsWith('http://www.facebook') || url.startsWith('https://www.facebook'))) {
           cy.request({
             url: url,
             followRedirect: false,
@@ -42,10 +42,12 @@ describe("Validate internal links", () => {
       if (url !== undefined && Cypress._.indexOf(data, url) === -1) {
         data.push(url);
 
-        if (url.indexOf('mailto') == -1 && url && (url.startsWith("/") || url.includes(hostname))) {
+        if (url.indexOf('mailto') == -1 && url && (url.startsWith("/") || url.includes(hostname)) && !(url.startsWith('http://www.facebook') || url.startsWith('https://www.facebook'))) {
           if (url.startsWith("/")){
             cy.visit(Cypress.env("startUrl")+url)
             cy.url().should('include', Cypress.env("startUrl")+url)
+          } else if (url.startsWith('http://www.facebook') || url.startsWith('https://www.facebook')){
+            cy.log("skip item: "+ url)
           } else {
             cy.visit(url)
             cy.url().should('include', url)
